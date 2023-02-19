@@ -6,16 +6,18 @@
 
  Description :
 
-*/package ena.testmod;
+*/
+package ena.testmod;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import ena.testmod.items.ExampleItem;
 import ena.testmod.items.LightsaberItem;
 import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.item.v1.FabricItemSettings;
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.item.Item;
+import net.fabricmc.fabric.api.registry.CompostingChanceRegistry;
 import net.minecraft.item.ItemGroups;
 import net.minecraft.item.Items;
 import net.minecraft.registry.Registries;
@@ -29,8 +31,9 @@ public class Mod implements ModInitializer {
 	public static final Logger LOGGER = LoggerFactory.getLogger("modid");
 
 	// public static final Item TOTO = new Item(new FabricItemSettings());
-	public static final Item LIGHTSABER_ITEM = new LightsaberItem(new FabricItemSettings().maxCount(7));
-	public static final Item BLASTER_ITEM = new LightsaberItem(new FabricItemSettings().maxCount(7));
+	public static final LightsaberItem LIGHTSABER_ITEM = new LightsaberItem(new FabricItemSettings().maxCount(1));
+	public static final ExampleItem BLASTER_ITEM = new ExampleItem(new FabricItemSettings().maxCount(1));
+	public static final ExampleItem EXAMPLE_ITEM = new ExampleItem(new FabricItemSettings());
 
 	@Override
 	public void onInitialize() {
@@ -41,8 +44,10 @@ public class Mod implements ModInitializer {
 		LOGGER.info("Hello Fabric world!");
 		Registry.register(Registries.ITEM, new Identifier("mod", "lightsaber"), LIGHTSABER_ITEM);
 		Registry.register(Registries.ITEM, new Identifier("mod", "blaster"), BLASTER_ITEM);
-		ItemGroupEvents.modifyEntriesEvent(ItemGroups.COMBAT).register(content -> {
-			// content.addAfter(Items., LIGHTSABER_ITEM);
+		Registry.register(Registries.ITEM, new Identifier("mod", "example_item"), EXAMPLE_ITEM);
+		CompostingChanceRegistry.INSTANCE.add(EXAMPLE_ITEM, 1.0F);
+		ItemGroupEvents.modifyEntriesEvent(ItemGroups.NATURAL).register(content -> {
+			content.addAfter(Items.WARPED_FUNGUS, EXAMPLE_ITEM);
 		});
 	}
 }
