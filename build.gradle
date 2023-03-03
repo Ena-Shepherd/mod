@@ -75,3 +75,13 @@ publishing {
 		// retrieving dependencies.
 	}
 }
+
+repositories {
+  maven { url = 'https://maven.nucleoid.xyz/' }
+}
+
+dependencies {
+   // Plasmid (minigames)
+    modImplementation "xyz.nucleoid:plasmid:0.5+1.19.3-SNAPSHOT"
+}
+
